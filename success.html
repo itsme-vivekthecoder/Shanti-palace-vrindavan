@@ -48,17 +48,50 @@
   <h2>Payment Successful 🎉</h2>
   <p>Your booking is confirmed.</p>
 
-  <button class="btn" onclick="sendWA()">Send Confirmation via WhatsApp</button>
+  <button class="btn" onclick="sendWhatsApp()">Send Confirmation via WhatsApp</button>
   <button class="btn" style="background:#1976d2;" onclick="sendSMS()">Send Confirmation via SMS</button>
 </div>
 
 <script>
-const name = localStorage.getItem("fullName");
-const phone = localStorage.getItem("phone");
-const room = localStorage.getItem("roomType");
-const paymentId = localStorage.getItem("paymentId");
-const checkInDate= localStorage.getItem("checkIn");
-const checkOutDate= localStorage.getItem("checkOut");
+const params = new URLSearchParams(window.location.search);
+const razorpayIdFromURL = params.get("razorpay_payment_id");
+
+if (razorpayIdFromURL) {
+  localStorage.setItem("paymentId", razorpayIdFromURL);
+}
+
+
+const name = localStorage.getItem('fullName') || '';
+const email = localStorage.getItem('email') || '';
+const phone = localStorage.getItem('phone') || '';
+const checkIn = localStorage.getItem('checkIn') || '';
+const checkOut = localStorage.getItem('checkOut') || '';
+const members = localStorage.getItem('members') || '';
+const roomType = localStorage.getItem('roomType') || '';
+const totalDays = localStorage.getItem('totalDays') || '';
+const finalAmount = localStorage.getItem('finalAmount') || 0;
+
+
+ // 1️⃣ Submit booking details to Google Form
+      const googleFormURL = "google-form-url";
+      const formData = new URLSearchParams({
+        "entry.1111111": name,
+        "entry.222222222": email,
+        "entry.33333333": phone,
+        "entry.4444444": roomType,
+        "entry.55555555": checkIn,
+        "entry.6666666": checkOut,
+        "entry.777777777": totalDays,
+        "entry.888888888": members,
+        "entry.9999999999": finalAmount,
+        "entry.100000000": response.razorpay_payment_id
+      });
+      fetch(googleFormURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: formData.toString()
+      });
 
 function sendWhatsApp() {
   const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
