@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Payment — Shanti Palace</title>
+
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header><h1>Complete Payment</h1></header>
@@ -20,23 +22,27 @@
     <p><strong>Check-Out:</strong> <span id="p_checkout"></span></p>
     <p style="font-size:18px"><strong>Amount:</strong> ₹<span id="p_amount"></span></p>
 
-    <button id="payBtn" class="btn btn-book" style="margin-top:12px">Pay Now</button>
+    <button id="payBtn" class="btn btn-book" style="margin-top:12px">
+      Pay Now
+    </button>
   </div>
 </main>
 
 <script>
-/* Load saved booking details */
-const name = localStorage.getItem('fullName') || '';
-const email = localStorage.getItem('email') || '';
-const phone = localStorage.getItem('phone') || '';
-const checkIn = localStorage.getItem('checkIn') || '';
-const checkOut = localStorage.getItem('checkOut') || '';
-const members = localStorage.getItem('members') || '';
-const roomType = localStorage.getItem('roomType') || '';
-const totalDays = localStorage.getItem('totalDays') || '';
-const finalAmount = localStorage.getItem('finalAmount') || 0;
+/* ===============================
+   LOAD BOOKING DETAILS
+================================ */
+const name       = localStorage.getItem('fullName') || '';
+const email      = localStorage.getItem('email') || '';
+const phone      = localStorage.getItem('phone') || '';
+const checkIn    = localStorage.getItem('checkIn') || '';
+const checkOut   = localStorage.getItem('checkOut') || '';
+const members    = localStorage.getItem('members') || '';
+const roomType   = localStorage.getItem('roomType') || '';
+const totalDays  = localStorage.getItem('totalDays') || '';
+const finalAmount= localStorage.getItem('finalAmount') || 0;
 
-/* Display details */
+/* DISPLAY */
 document.getElementById('p_name').innerText = name;
 document.getElementById('p_phone').innerText = phone;
 document.getElementById('p_room').innerText = roomType;
@@ -44,55 +50,36 @@ document.getElementById('p_checkin').innerText = checkIn;
 document.getElementById('p_checkout').innerText = checkOut;
 document.getElementById('p_amount').innerText = finalAmount;
 
-/* Payment button */
-document.getElementById('payBtn').addEventListener('click', function(){
+/* ===============================
+   PAYMENT
+================================ */
+document.getElementById('payBtn').addEventListener('click', function () {
+
+  if (!name || !phone || !finalAmount) {
+    alert("Booking details missing. Please go back and try again.");
+    return;
+  }
+
   const amountPaise = Math.round(Number(finalAmount) * 100);
 
   const options = {
-    "key": "rzp_live_RkeY8hnUYgxlKN", // ← Replace with your Razorpay key
-    "amount": amountPaise,
-    "currency": "INR",
-    "name": "Shanti Palace Vrindavan",
-    "description": "Room Booking Payment",
-    "prefill": { "name": name, "email": email, "contact": phone },
+    key: "razor-pay-id",   // 🔐 real key hosting pe daalna
+    amount: amountPaise,
+    currency: "INR",
+    name: "Shanti Palace Vrindavan",
+    description: "Room Booking Payment",
 
-    "handler": function (response){
-      // Save payment ID for later
-      localStorage.setItem('paymentId', response.razorpay_payment_id);
+    /* ⭐ CRITICAL FIX ⭐ */
+    callback_url: "success.html",
 
-      // 1️⃣ Submit booking details to Google Form
-      const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
-      const formData = new URLSearchParams({
-        "entry.1181525787": name,
-        "entry.1505113845": phone,
-        "entry.26796576": email,
-        "entry.133939998": roomType,
-        "entry.8435932": checkIn,
-        "entry.1082238197": checkOut,
-        "entry.516627955": totalDays,
-        "entry.1301069124": members,
-        "entry.764039404": finalAmount,
-        "entry.2021412614": response.razorpay_payment_id
-      });
-      fetch(googleFormURL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: formData.toString()
-      });
+    prefill: {
+      name: name,
+      email: email,
+      contact: phone
+    },
 
-      // 2️⃣ Notify owner via backend WhatsApp
-      fetch("https://YOUR_SERVER_URL/owner-notify", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          name, phone, email, roomType, checkIn, checkOut, members,
-          amount: finalAmount, paymentId: response.razorpay_payment_id
-        })
-      });
-
-      // 3️⃣ Redirect to success page (user sees WhatsApp/SMS buttons there)
-      setTimeout(()=> window.location.href = "success.html", 700);
+    theme: {
+      color: "#7a1f1f"
     }
   };
 
