@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Successful</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #444;
+      font-size: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #c27802;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="box">
+  <h2>Payment Successful 🎉</h2>
+  <p>Your booking is confirmed.</p>
+
+  <button class="btn" onclick="sendWA()">Send Confirmation via WhatsApp</button>
+  <button class="btn" style="background:#1976d2;" onclick="sendSMS()">Send Confirmation via SMS</button>
+</div>
+
+<script>
+const name = localStorage.getItem("fullName");
+const phone = localStorage.getItem("phone");
+const room = localStorage.getItem("roomType");
+const paymentId = localStorage.getItem("paymentId");
+const checkInDate= localStorage.getItem("checkIn");
+const checkOutDate= localStorage.getItem("checkOut");
+
+function sendWhatsApp() {
+  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
+Your booking is CONFIRMED ✅
+
+Room: ${room}
+Check In Date: ${checkInDate}
+check Out Date: ${checkOutDate}
+Payment ID: ${paymentId}
+
+Shanti Palace Vrindavan`;
+
+  window.open(
+    "https://wa.me/91" + phone + "?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+}
+
+function sendSMS() {
+  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
+Your booking is CONFIRMED ✅
+
+Room: ${room}
+Check In Date: ${checkInDate}
+check Out Date: ${checkOutDate}
+Payment ID: ${paymentId}
+
+Shanti Palace Vrindavan`;
+  window.location.href =
+    "sms:91" + phone + "?body=" + encodeURIComponent(msg);
+}
+</script>
+
+</body>
+</html>

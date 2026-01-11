@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Shanti Palace Vrindavan – Affordable, peaceful guest house near Banke Bihari Mandir & ISKCON Temple. Best stay for pilgrims in Vrindavan.">
+<meta name="keywords" content="Vrindavan guest house, Shanti Palace Vrindavan, hotel near Banke Bihari Mandir, budget hotel Vrindavan,mathura hotel,mathura cheap guest house,vrindavan cheap guest house,">
+<meta name="author" content="Shanti Palace Vrindavan">
+  <title>Shanti Palace Vrindavan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>SHANTI PALACE</h1>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#rooms">Rooms</a>
+    <a href="gallery.html" target="_blank">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#Booking">Booking</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <h2>SHANTI PALACE VRINDAVAN</h2>
+  <p>Stay Peacefully in the Heart of Vrindavan.<br/>Welcome to Vrindavan Guest House — a calm, affordable, and devotional stay near Banke Bihari Mandir and ISKCON Temple.</p>
+  <button class="btn" id="btnBookNow">Book Now</button>
+</section>
+
+<section id="rooms">
+  <h2>Our Rooms</h2>
+  <div class="rooms">
+    <div class="room-card">
+<a href="gallery.html" target="_blank">
+  <img src="1.jpg" class="room-image" alt="Room Image">
+</a>
+
+      <h3>Double Bed Room</h3>
+      <p>Perfect for solo travelers seeking peace and comfort. Includes free Wi-Fi and AC.</p>
+    </div>
+    
+    <div class="room-card">
+     <a href="gallery.html" target="_blank">
+  <img src="4.jpg" class="room-image" alt="Room Image">
+</a>
+
+
+      <h3>Three Bed Room</h3>
+      <p>Spacious and cozy for couples or families. Includes TV, attached bathroom, and Wi-Fi.</p>
+    </div>
+    <div class="room-card">
+     <a href="gallery.html" target="_blank">
+  <img src="2.jpg" class="room-image" alt="Room Image">
+</a>
+
+      <h3>Four Bed Room</h3>
+      <p>Comfortable and large room for family stays, with all modern facilities.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <div class="owners">
+    <div class="owner-card"><img src="8.jpeg" alt="Owner 1"></div>
+    <p>BHUVANESH CHAUDHARY</p>
+    <div class="owner-card"><img src="9.jpeg" alt="Owner 2"></div>
+     <p>CHANDRAVEER FOJDAR (CHANDU)</p>
+  </div>
+  <p class="outro">Located near Vidhyapeeth Chauraha, SHANTI PALACE offers peaceful and devotional stays for pilgrims and tourists. Our goal is to provide clean, comfortable rooms and a homely atmosphere just minutes away from Vrindavan’s sacred temples.</p>
+</section>
+
+<section id="Booking" class="booking-section">
+  <h2 class="title">Book Your Stay</h2>
+
+  <form class="booking-form">
+    <div class="input-group">
+      <input id="fullName" type="text" required placeholder="">
+      <label>Full Name</label>
+    </div>
+
+    <div class="input-group">
+      <input id="email" type="email" required placeholder="">
+      <label>Email Address</label>
+    </div>
+
+    <div class="input-group">
+      <input id="phone" type="tel" required placeholder="">
+      <label>Phone Number</label>
+    </div>
+
+    <div class="input-group">
+      <input id="checkIn" type="date" required>
+      <label class="fixed">Check-In Date</label>
+    </div>
+
+    <div class="input-group">
+      <input id="checkOut" type="date" required>
+      <label class="fixed">Check-Out Date</label>
+    </div>
+
+    <div class="input-group">
+      <input id="members" type="number" min="1" required placeholder="">
+      <label>Number of Members</label>
+    </div>
+
+    <div class="input-group">
+      <select id="roomType" required>
+        <option value="" disabled selected>Select Room Type</option>
+        <option value="Double Bed Room">Double Bed Room – ₹1/day</option>
+        <option value="Three Bed Room">Three Bed Room – ₹1200/day</option>
+        <option value="Four Bed Room">Four Bed Room – ₹1600/day</option>
+      </select>
+      <label class="fixed">Room Type</label>
+    </div>
+
+    <!-- CHECK AVAILABILITY -->
+    <button type="button" id="checkBtn" class="btn-submit" style="background:#444;">Check Availability</button>
+
+    <!-- Availability Output -->
+    <p id="availabilityMsg" style="font-weight:bold; margin-top:10px;"></p>
+
+    <!-- Confirm Booking (Hidden Until Available) -->
+    <button type="submit" id="confirmBtn" class="btn-submit" style="display:none;">Confirm Booking</button>
+
+    <p id="totalPrice" style="font-weight:bold; margin-top:10px; color:#111;"></p>
+
+  </form>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>📍 Address: Vidhyapeeth Chauraha, Vrindavan, Mathura<br/>
+     📞 Phone: 91XXXXXXXXXX, 91XXXXXXXXXX <br/>
+     ✉️ Email: Shantipalace@gmail.com</p>
+</section>
+
+<div class="map-box">
+  <iframe 
+    src="https://www.google.com/maps?q=Vidhyapeeth%20Chauraha%20Vrindavan&output=embed"
+    loading="lazy">
+  </iframe>
+</div>
+
+
+<footer>
+  <p>© 2025 Vrindavan Guest House | All Rights Reserved</p>
+</footer>
+
+<script>
+
+function toggleMenu() {
+  document.querySelector("nav").classList.toggle("active");
+}
+
+
+  // Scroll animation effect
+  const sections = document.querySelectorAll("section");
+  window.addEventListener("scroll", () => {
+    const triggerBottom = window.innerHeight / 1.1;
+    sections.forEach((sec) => {
+      const top = sec.getBoundingClientRect().top;
+      if (top < triggerBottom) sec.classList.add("show");
+    });
+  });
+
+
+  
+
+
+  // BOOK NOW BUTTON → scroll to form
+  document.getElementById("btnBookNow").addEventListener("click", () => {
+    document.getElementById("Booking").scrollIntoView({ behavior: "smooth" });
+  });
+
+// ---------- CHECK AVAILABILITY ----------
+  document.getElementById("checkBtn").addEventListener("click", function () {
+
+    const room = document.getElementById("roomType").value;
+    const checkIn = document.getElementById("checkIn").value;
+    const checkOut = document.getElementById("checkOut").value;
+
+    if (!room || !checkIn || !checkOut) {
+      alert("Please fill all details");
+      return;
+    }
+
+    // SIMPLE DEMO LOGIC: always available
+    const available = true;
+
+    if (available) {
+      document.getElementById("availabilityMsg").innerHTML =
+        "✅ Room is AVAILABLE!";
+      document.getElementById("availabilityMsg").style.color = "green";
+
+      // show confirm booking button
+      document.getElementById("confirmBtn").style.display = "block";
+    } else {
+      document.getElementById("availabilityMsg").innerHTML =
+        "❌ Room NOT Available!";
+      document.getElementById("availabilityMsg").style.color = "red";
+      document.getElementById("confirmBtn").style.display = "none";
+    }
+  });
+
+
+  // Booking form submit — calculate days, price, save and redirect to payment
+  document.querySelector(".booking-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const roomType = document.getElementById("roomType").value;
+    let pricePerDay = 0;
+    if (roomType === "Double Bed Room") pricePerDay = 1;
+    if (roomType === "Three Bed Room") pricePerDay = 1200;
+    if (roomType === "Four Bed Room") pricePerDay = 1600;
+
+    const checkInVal = document.getElementById("checkIn").value;
+    const checkOutVal = document.getElementById("checkOut").value;
+    if (!checkInVal || !checkOutVal) return alert("Please select dates");
+
+    const checkIn = new Date(checkInVal);
+    const checkOut = new Date(checkOutVal);
+
+    if (checkOut <= checkIn) {
+      alert("Check-out must be after check-in");
+      return;
+    }
+
+    const totalDays = (checkOut - checkIn) / (1000 * 3600 * 24);
+    const finalAmount = totalDays * pricePerDay;
+
+    // Save values to localStorage for payment page
+    localStorage.setItem("fullName", document.getElementById("fullName").value);
+    localStorage.setItem("email", document.getElementById("email").value);
+    localStorage.setItem("phone", document.getElementById("phone").value);
+    localStorage.setItem("checkIn", checkInVal);
+    localStorage.setItem("checkOut", checkOutVal);
+    localStorage.setItem("members", document.getElementById("members").value);
+    localStorage.setItem("roomType", roomType);
+    localStorage.setItem("totalDays", totalDays);
+    localStorage.setItem("finalAmount", finalAmount);
+
+    // show quick price on page (optional)
+    document.getElementById("totalPrice").innerText = `Total: ₹${finalAmount} (${totalDays} night(s))`;
+
+    // Redirect to payment page
+    setTimeout(()=> window.location.href = "payment.html", 700);
+  });
+</script>
+</body>
+</html>

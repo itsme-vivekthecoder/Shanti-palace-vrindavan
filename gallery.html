@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery | Shanti Palace</title>
+<link rel="stylesheet" href="styleGallery.css">
+</head>
+<body>
+
+<section class="gallery-section">
+  <h2>Our Gallery</h2>
+
+  <div class="gallery-grid">
+    <img src="1.jpg" class="gallery-img">
+    <img src="2.jpg" class="gallery-img">
+    <img src="3.jpg" class="gallery-img">
+    <img src="4.jpg" class="gallery-img">
+    <img src="5.jpg" class="gallery-img">
+    <img src="6.jpg" class="gallery-img">
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span id="close">&times;</span>
+  <img id="lightbox-img">
+  <button id="prev">&#10094;</button>
+  <button id="next">&#10095;</button>
+</div>
+
+<script>
+const images = document.querySelectorAll(".gallery-img");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+let currentIndex = 0;
+
+images.forEach((img, index) => {
+  img.addEventListener("click", () => {
+    currentIndex = index;
+    openLightbox();
+  });
+});
+
+function openLightbox() {
+  lightbox.style.display = "flex";
+  lightboxImg.src = images[currentIndex].src;
+}
+
+document.getElementById("close").onclick = () => {
+  lightbox.style.display = "none";
+};
+
+document.getElementById("prev").onclick = () => {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  lightboxImg.src = images[currentIndex].src;
+};
+
+document.getElementById("next").onclick = () => {
+  currentIndex = (currentIndex + 1) % images.length;
+  lightboxImg.src = images[currentIndex].src;
+};
+
+lightbox.addEventListener("click", e => {
+  if (e.target === lightbox) lightbox.style.display = "none";
+});
+</script>
+
+</body>
+</html>
