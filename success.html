@@ -72,19 +72,19 @@ const totalDays = localStorage.getItem('totalDays') || '';
 const finalAmount = localStorage.getItem('finalAmount') || 0;
 
 
- // 1️⃣ Submit booking details to Google Form
-      const googleFormURL = "google-form-url";
+// 1️⃣ Submit booking details to Google Form
+      const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
       const formData = new URLSearchParams({
-        "entry.1111111": name,
-        "entry.222222222": email,
-        "entry.33333333": phone,
-        "entry.4444444": roomType,
-        "entry.55555555": checkIn,
-        "entry.6666666": checkOut,
-        "entry.777777777": totalDays,
-        "entry.888888888": members,
-        "entry.9999999999": finalAmount,
-        "entry.100000000": response.razorpay_payment_id
+        "entry.1181525787": name,
+        "entry.26796576": email,
+        "entry.1505113845": phone,
+        "entry.133939998": roomType,
+        "entry.8435932": checkIn,
+        "entry.1082238197": checkOut,
+        "entry.516627955": totalDays,
+        "entry.1301069124": members,
+        "entry.764039404": finalAmount,
+        "entry.2021412614": response.razorpay_payment_id
       });
       fetch(googleFormURL, {
         method: "POST",
@@ -127,3 +127,4 @@ Shanti Palace Vrindavan`;
 
 </body>
 </html>
+
