@@ -1,93 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Payment — Shanti Palace</title>
+  <meta charset="UTF-8">
+  <title>Payment | Shanti Palace Vrindavan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Razorpay Checkout -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <link rel="stylesheet" href="style.css">
-</head>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #7a1f1f;
+    }
+    p {
+      margin: 5px 0;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #7a1f1f;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #5c1717;
+    }
+  </style>
+</head>
 <body>
 
-<header><h1>Complete Payment</h1></header>
-
-<main style="padding:18px;max-width:720px;margin:18px auto">
-  <div style="background:#fff;padding:16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.06)">
-    <p><strong>Name:</strong> <span id="p_name"></span></p>
-    <p><strong>Phone:</strong> <span id="p_phone"></span></p>
-    <p><strong>Room:</strong> <span id="p_room"></span></p>
-    <p><strong>Check-In:</strong> <span id="p_checkin"></span></p>
-    <p><strong>Check-Out:</strong> <span id="p_checkout"></span></p>
-    <p style="font-size:18px"><strong>Amount:</strong> ₹<span id="p_amount"></span></p>
-
-    <button id="payBtn" class="btn btn-book" style="margin-top:12px">
-      Pay Now
-    </button>
-  </div>
-</main>
+<div class="box">
+  <h2>Confirm Payment</h2>
+  <p id="details"></p>
+  <button onclick="startPayment()">Pay Now</button>
+</div>
 
 <script>
-/* ===============================
-   LOAD BOOKING DETAILS
-================================ */
-const name       = localStorage.getItem('fullName') || '';
-const email      = localStorage.getItem('email') || '';
-const phone      = localStorage.getItem('phone') || '';
-const checkIn    = localStorage.getItem('checkIn') || '';
-const checkOut   = localStorage.getItem('checkOut') || '';
-const members    = localStorage.getItem('members') || '';
-const roomType   = localStorage.getItem('roomType') || '';
-const totalDays  = localStorage.getItem('totalDays') || '';
-const finalAmount= localStorage.getItem('finalAmount') || 0;
+  // Get data from URL
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name");
+  const phone = params.get("phone");
+  const room = params.get("room");
+  const amount = params.get("amount");
 
-/* DISPLAY */
-document.getElementById('p_name').innerText = name;
-document.getElementById('p_phone').innerText = phone;
-document.getElementById('p_room').innerText = roomType;
-document.getElementById('p_checkin').innerText = checkIn;
-document.getElementById('p_checkout').innerText = checkOut;
-document.getElementById('p_amount').innerText = finalAmount;
+  document.getElementById("details").innerHTML =
+    `<strong>Name:</strong> ${name}<br>
+     <strong>Phone:</strong> ${phone}<br>
+     <strong>Room:</strong> ${room}<br>
+     <strong>Amount:</strong> ₹${amount}`;
 
-/* ===============================
-   PAYMENT
-================================ */
-document.getElementById('payBtn').addEventListener('click', function () {
+  function startPayment() {
+    var options = {
+      "key": "rzp_live_RkeY8hnUYgxlKN",   // 👉 APNI LIVE KEY_ID DALO
+      "amount": amount * 100,           // paise me
+      "currency": "INR",
+      "name": "Shanti Palace Vrindavan",
+      "description": "Room Booking Payment",
 
-  if (!name || !phone || !finalAmount) {
-    alert("Booking details missing. Please go back and try again.");
-    return;
+      "handler": function (response) {
+        // ✅ Payment success hone ke baad yahi activity hoti hai
+        window.location.href =
+          "success.html?name=" + encodeURIComponent(name) +
+          "&phone=" + encodeURIComponent(phone) +
+          "&room=" + encodeURIComponent(room) +
+          "&amount=" + encodeURIComponent(amount) +
+          "&payment_id=" + response.razorpay_payment_id;
+      },
+
+      "prefill": {
+        "name": name,
+        "contact": phone
+      },
+
+      "theme": {
+        "color": "#7a1f1f"
+      }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
   }
-
-  const amountPaise = Math.round(Number(finalAmount) * 100);
-
-  const options = {
-    key: "rzp_live_RkeY8hnUYgxlKN",   // 🔐 real key hosting pe daalna
-    amount: amountPaise,
-    currency: "INR",
-    name: "Shanti Palace Vrindavan",
-    description: "Room Booking Payment",
-
-    /* ⭐ CRITICAL FIX ⭐ */
-    callback_url: "success.html",
-
-    prefill: {
-      name: name,
-      email: email,
-      contact: phone
-    },
-
-    theme: {
-      color: "#7a1f1f"
-    }
-  };
-
-  const rzp = new Razorpay(options);
-  rzp.open();
-});
 </script>
 
 </body>
 </html>
-
