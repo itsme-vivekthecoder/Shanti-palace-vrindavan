@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booking Successful</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Successful</title>
 
-<style>
-body {
-  font-family: Arial;
-  background: #f5f5f5;
-  padding: 20px;
-  text-align: center;
-}
-.box {
-  background: white;
-  padding: 22px;
-  border-radius: 10px;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-h2 { color: #2e7d32; }
-.btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background: #c27802;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-</style>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #444;
+      font-size: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #c27802;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+  </style>
+
 </head>
-
 <body>
 
 <div class="box">
@@ -46,60 +53,53 @@ h2 { color: #2e7d32; }
 </div>
 
 <script>
-/* 🔹 Get payment ID from URL */
 const params = new URLSearchParams(window.location.search);
-const paymentId = params.get("payment_id") || "";
+const razorpayIdFromURL = params.get("razorpay_payment_id");
 
-/* 🔹 Save payment ID */
-if (paymentId) {
-  localStorage.setItem("paymentId", paymentId);
+if (razorpayIdFromURL) {
+  localStorage.setItem("paymentId", razorpayIdFromURL);
 }
 
-/* 🔹 Get booking details from localStorage */
-const name = localStorage.getItem("fullName") || "";
-const email = localStorage.getItem("email") || "";
-const phone = localStorage.getItem("phone") || "";
-const checkIn = localStorage.getItem("checkIn") || "";
-const checkOut = localStorage.getItem("checkOut") || "";
-const members = localStorage.getItem("members") || "";
-const roomType = localStorage.getItem("roomType") || "";
-const totalDays = localStorage.getItem("totalDays") || "";
-const finalAmount = localStorage.getItem("finalAmount") || "";
 
-/* 🔹 Save booking to Google Form */
-const googleFormURL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
+const name = localStorage.getItem('fullName') || '';
+const email = localStorage.getItem('email') || '';
+const phone = localStorage.getItem('phone') || '';
+const checkIn = localStorage.getItem('checkIn') || '';
+const checkOut = localStorage.getItem('checkOut') || '';
+const members = localStorage.getItem('members') || '';
+const roomType = localStorage.getItem('roomType') || '';
+const totalDays = localStorage.getItem('totalDays') || '';
+const finalAmount = localStorage.getItem('finalAmount') || 0;
 
-const formData = new URLSearchParams({
-  "entry.1181525787": name,
-  "entry.26796576": email,
-  "entry.1505113845": phone,
-  "entry.133939998": roomType,
-  "entry.8435932": checkIn,
-  "entry.1082238197": checkOut,
-  "entry.516627955": totalDays,
-  "entry.1301069124": members,
-  "entry.764039404": finalAmount,
-  "entry.2021412614": paymentId
-});
 
-fetch(googleFormURL, {
-  method: "POST",
-  mode: "no-cors",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: formData.toString()
-});
+ // 1️⃣ Submit booking details to Google Form
+      const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
+      const formData = new URLSearchParams({
+        "entry.1181525787": name,
+        "entry.26796576": email,
+        "entry.1505113845": phone,
+        "entry.133939998": roomType,
+        "entry.8435932": checkIn,
+        "entry.1082238197": checkOut,
+        "entry.516627955": totalDays,
+        "entry.1301069124": members,
+        "entry.764039404": finalAmount,
+        "entry.2021412614": response.razorpay_payment_id
+      });
+      fetch(googleFormURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: formData.toString()
+      });
 
-/* 🔹 WhatsApp */
 function sendWhatsApp() {
-  const msg = `🙏 Radhe Radhe ${name}
-
+  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
 Your booking is CONFIRMED ✅
 
-Room: ${roomType}
-Check-In: ${checkIn}
-Check-Out: ${checkOut}
-Amount: ₹${finalAmount}
+Room: ${room}
+Check In Date: ${checkInDate}
+check Out Date: ${checkOutDate}
 Payment ID: ${paymentId}
 
 Shanti Palace Vrindavan`;
@@ -110,19 +110,16 @@ Shanti Palace Vrindavan`;
   );
 }
 
-/* 🔹 SMS */
 function sendSMS() {
-  const msg = `Radhe Radhe ${name}
+  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
+Your booking is CONFIRMED ✅
 
-Booking CONFIRMED
-Room: ${roomType}
-Check-In: ${checkIn}
-Check-Out: ${checkOut}
-Amount: ₹${finalAmount}
+Room: ${room}
+Check In Date: ${checkInDate}
+check Out Date: ${checkOutDate}
 Payment ID: ${paymentId}
 
 Shanti Palace Vrindavan`;
-
   window.location.href =
     "sms:91" + phone + "?body=" + encodeURIComponent(msg);
 }
