@@ -31,20 +31,25 @@ app.post("/create-order", async (req, res) => {
 });
 
 
-app.post("/verify-payment", async (req, res) => {
-  try {
-    const { order_id, payment_id, signature, amount } = req.body;
+const crypto = require("crypto");
 
-    const body = order_id + "|" + payment_id;
+app.post("/verify-payment", (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-    const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(body)
-      .digest("hex");
+  const sign = razorpay_order_id + "|" + razorpay_payment_id;
 
-    if (expectedSignature !== signature) {
-      return res.status(400).json({ status: "signature_failed" });
-    }
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(sign.toString())
+    .digest("hex");
+
+  if (expectedSignature === razorpay_signature) {
+    res.json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "Payment verification failed" });
+  }
+});
+
 
     // 🔥 CAPTURE WITH EXACT AMOUNT
     await razorpay.payments.capture(payment_id, amount);
@@ -61,4 +66,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
