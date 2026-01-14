@@ -51,7 +51,7 @@ app.post("/verify-payment", (req, res) => {
     // 🔥 CAPTURE WITH EXACT AMOUNT
     await razorpay.payments.capture(payment_id, amount);
 
-    res.json({ status: "success" });
+   .than(res.json({ status: "success" }));
 
   } catch (err) {
     console.error("CAPTURE ERROR:", err);
@@ -63,6 +63,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
 
 
