@@ -1,104 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Payment | Shanti Palace Vrindavan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Secure Payment | Shanti Palace Vrindavan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Razorpay Checkout -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      margin-bottom: 10px;
-      color: #7a1f1f;
-    }
-    p {
-      margin: 5px 0;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #7a1f1f;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background: #5c1717;
-    }
-  </style>
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7a1f1f, #c27802);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  width: 360px;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: slideUp 0.8s ease;
+}
+
+/* Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  margin-top: 0;
+  color: #7a1f1f;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 15px;
+}
+.detail:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #555;
+}
+.value {
+  font-weight: 600;
+}
+
+/* Button */
+button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7a1f1f, #c27802);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Small text */
+.note {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="box">
-  <h2>Confirm Payment</h2>
-  <p id="details"></p>
-  <button onclick="startPayment()">Pay Now</button>
+<div class="card">
+  <h2>Confirm Your Booking</h2>
+
+  <div class="detail">
+    <span class="label">Name</span>
+    <span class="value" id="name">-</span>
+  </div>
+
+  <div class="detail">
+    <span class="label">Phone</span>
+    <span class="value" id="phone">-</span>
+  </div>
+
+  <div class="detail">
+    <span class="label">Room Type</span>
+    <span class="value" id="room">-</span>
+  </div>
+
+  <div class="detail">
+    <span class="label">Total Amount</span>
+    <span class="value">₹ <span id="amount">0</span></span>
+  </div>
+
+  <button onclick="startPayment()">Proceed to Pay</button>
+
+  <div class="note">
+    🔒 100% Secure Payment via Razorpay
+  </div>
 </div>
 
 <script>
-  // Get data from URL
-  const params = new URLSearchParams(window.location.search);
-  const name = params.get("name");
-  const phone = params.get("phone");
-  const room = params.get("room");
-  const amount = params.get("amount");
+/* 🔹 Get data from localStorage (INDEX.HTML se aata hai) */
+const name = localStorage.getItem("fullName");
+const phone = localStorage.getItem("phone");
+const room = localStorage.getItem("roomType");
+const amount = parseInt(localStorage.getItem("finalAmount"));
 
-  document.getElementById("details").innerHTML =
-    `<strong>Name:</strong> ${name}<br>
-     <strong>Phone:</strong> ${phone}<br>
-     <strong>Room:</strong> ${room}<br>
-     <strong>Amount:</strong> ₹${amount}`;
+/* 🔹 Show details on page */
+document.getElementById("name").innerText = name || "-";
+document.getElementById("phone").innerText = phone || "-";
+document.getElementById("room").innerText = room || "-";
+document.getElementById("amount").innerText = amount || "0";
 
-  function startPayment() {
-    var options = {
-      "key": "rzp_live_RkeY8hnUYgxlKN",   // 👉 APNI LIVE KEY_ID DALO
-      "amount": amount * 100,           // paise me
-      "currency": "INR",
-      "name": "Shanti Palace Vrindavan",
-      "description": "Room Booking Payment",
+body: JSON.stringify({
+  order_id: response.razorpay_order_id,
+  payment_id: response.razorpay_payment_id,
+  signature: response.razorpay_signature,
+  amount: order.amount   // 👈 SEND EXACT AMOUNT
+})
 
-      "handler": function (response) {
-        // ✅ Payment success hone ke baad yahi activity hoti hai
-        window.location.href =
-          "success.html?name=" + encodeURIComponent(name) +
-          "&phone=" + encodeURIComponent(phone) +
-          "&room=" + encodeURIComponent(room) +
-          "&amount=" + encodeURIComponent(amount) +
-          "&payment_id=" + response.razorpay_payment_id;
+/* 🔹 Start Payment */
+async function startPayment() {
+
+  if (!amount || amount <= 0) {
+    alert("Invalid amount");
+    return;
+  }
+
+  try {
+    /* STEP 1: Create order */
+    const res = await fetch("http://localhost:5000/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount })
+    });
+
+    const order = await res.json();
+
+    /* STEP 2: Razorpay checkout */
+    const options = {
+      key:"rzp_live_RkeY8hnUYgxlKN" , // ONLY KEY ID
+      amount: order.amount,
+      currency: "INR",
+      name: "Shanti Palace Vrindavan",
+      description: "Room Booking Payment",
+      order_id: order.id,
+
+      handler: async function (response) {
+
+        /* STEP 3: Verify payment */
+        const verify = await fetch("http://localhost:5000/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            order_id: response.razorpay_order_id,
+            payment_id: response.razorpay_payment_id,
+            signature: response.razorpay_signature
+          })
+        });
+
+        const result = await verify.json();
+
+        if (result.status === "success") {
+          window.location.href =
+            "success.html" +
+            "?payment_id=" + encodeURIComponent(response.razorpay_payment_id);
+        } else {
+          alert("Payment verification failed");
+        }
       },
 
-      "prefill": {
-        "name": name,
-        "contact": phone
+      prefill: {
+        name: name,
+        contact: phone
       },
 
-      "theme": {
-        "color": "#7a1f1f"
+      theme: {
+        color: "#7a1f1f"
       }
     };
 
-    var rzp = new Razorpay(options);
-    rzp.open();
+    new Razorpay(options).open();
+
+  } catch (err) {
+    alert("Server error");
+    console.error(err);
   }
+}
 </script>
 
 </body>
