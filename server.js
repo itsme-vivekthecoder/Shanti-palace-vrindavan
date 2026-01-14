@@ -30,9 +30,6 @@ app.post("/create-order", async (req, res) => {
   });
 });
 
-
-const crypto = require("crypto");
-
 app.post("/verify-payment", (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
@@ -66,5 +63,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
 
