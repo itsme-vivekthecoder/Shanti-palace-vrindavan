@@ -163,7 +163,7 @@ async function startPayment() {
 
   try {
     /* STEP 1: Create order */
-    const res = await fetch("http://localhost:5000/create-order", {
+    const res = await fetch("https://shanti-palace-vrindavan.onrender.com", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount })
@@ -225,3 +225,4 @@ async function startPayment() {
 
 </body>
 </html>
+
