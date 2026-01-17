@@ -146,13 +146,6 @@ document.getElementById("phone").innerText = phone || "-";
 document.getElementById("room").innerText = room || "-";
 document.getElementById("amount").innerText = amount || "0";
 
-body: JSON.stringify({
-  order_id: response.razorpay_order_id,
-  payment_id: response.razorpay_payment_id,
-  signature: response.razorpay_signature,
-  amount: order.amount   // 👈 SEND EXACT AMOUNT
-})
-
 /* 🔹 Start Payment */
 async function startPayment() {
 
@@ -189,7 +182,8 @@ async function startPayment() {
           body: JSON.stringify({
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
-            signature: response.razorpay_signature
+            signature: response.razorpay_signature,
+             amount: order.amount   // 👈 SEND EXACT AMOUNT
           })
         });
 
@@ -225,6 +219,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
