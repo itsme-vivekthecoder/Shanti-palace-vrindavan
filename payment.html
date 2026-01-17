@@ -135,12 +135,10 @@ button:active {
 
 <script>
 /* 🔹 Get data from localStorage (INDEX.HTML se aata hai) */
-const params = new URLSearchParams(window.location.search);
-
-const name = params.get("name");
-const phone = params.get("phone");
-const room = params.get("room");
-const amount = parseInt(params.get("amount"));
+const name = localStorage.getItem("fullName");
+const phone = localStorage.getItem("phone");
+const room = localStorage.getItem("roomType");
+const amount = parseInt(localStorage.getItem("finalAmount"));
 
 /* 🔹 Show details on page */
 document.getElementById("name").innerText = name || "-";
