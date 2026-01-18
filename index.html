@@ -234,23 +234,36 @@ function toggleMenu() {
     const totalDays = (checkOut - checkIn) / (1000 * 3600 * 24);
     const finalAmount = totalDays * pricePerDay;
 
-    // Save values to localStorage for payment page
-    localStorage.setItem("fullName", document.getElementById("fullName").value);
-    localStorage.setItem("email", document.getElementById("email").value);
-    localStorage.setItem("phone", document.getElementById("phone").value);
-    localStorage.setItem("checkIn", checkInVal);
-    localStorage.setItem("checkOut", checkOutVal);
-    localStorage.setItem("members", document.getElementById("members").value);
-    localStorage.setItem("roomType", roomType);
-    localStorage.setItem("totalDays", totalDays);
-    localStorage.setItem("finalAmount", finalAmount);
+ const fullName = document.getElementById("fullName").value;
+const email = document.getElementById("email").value;
+const phone = document.getElementById("phone").value;
+const members = document.getElementById("members").value;
+
+// show quick price on page (optional)
+document.getElementById("totalPrice").innerText =
+  `Total: ₹${finalAmount} (${totalDays} night(s))`;
+
+// ✅ REDIRECT WITH PARAMS
+setTimeout(() => {
+  window.location.href =
+    "payment.html" +
+    "?name=" + encodeURIComponent(fullName) +
+    "&email=" + encodeURIComponent(email) +
+    "&phone=" + encodeURIComponent(phone) +
+    "&room=" + encodeURIComponent(roomType) +
+    "&checkIn=" + encodeURIComponent(checkInVal) +
+    "&checkOut=" + encodeURIComponent(checkOutVal) +
+    "&members=" + encodeURIComponent(members) +
+    "&days=" + encodeURIComponent(totalDays) +
+    "&amount=" + encodeURIComponent(finalAmount);
+}, 700);
+
 
     // show quick price on page (optional)
     document.getElementById("totalPrice").innerText = `Total: ₹${finalAmount} (${totalDays} night(s))`;
 
-    // Redirect to payment page
-    setTimeout(()=> window.location.href = "payment.html", 700);
-  });
+ 
 </script>
 </body>
 </html>
+
