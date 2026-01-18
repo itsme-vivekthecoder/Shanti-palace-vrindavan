@@ -135,32 +135,27 @@ button:active {
 
 <script>
 /* 🔹 Get data from localStorage (INDEX.HTML se aata hai) */
-const name = localStorage.getItem("fullName");
-const phone = localStorage.getItem("phone");
-const room = localStorage.getItem("roomType");
-const amount = parseInt(localStorage.getItem("finalAmount"));
+const params = new URLSearchParams(window.location.search);
 
-  if (!name || !phone || !room || !amount || isNaN(amount)) {
+const name = params.get("name");
+const phone = params.get("phone");
+const room = params.get("room");
+const amount = parseInt(params.get("amount"));
+
+if (!name || !phone || !room || !amount || isNaN(amount)) {
   alert("Booking details missing. Please book again.");
   window.location.href = "index.html#Booking";
-  return;
+  throw new Error("Missing booking details");
 }
 
+/* Show details */
+document.getElementById("name").innerText = name;
+document.getElementById("phone").innerText = phone;
+document.getElementById("room").innerText = room;
+document.getElementById("amount").innerText = amount;
 
-/* 🔹 Show details on page */
-document.getElementById("name").innerText = name || "-";
-document.getElementById("phone").innerText = phone || "-";
-document.getElementById("room").innerText = room || "-";
-document.getElementById("amount").innerText = amount || "0";
-
-/* 🔹 Start Payment */
+/* Start Payment */
 async function startPayment() {
-
-  if (!amount || amount <= 0) {
-    alert("Invalid amount");
-    return;
-  }
-
   try {
     /* STEP 1: Create order */
     const res = await fetch("https://shanti-palace-vrindavan.onrender.com/create-order", {
@@ -226,6 +221,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
