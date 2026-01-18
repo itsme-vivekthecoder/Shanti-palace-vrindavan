@@ -153,117 +153,97 @@
 </footer>
 
 <script>
-
+/* ---------- MOBILE MENU ---------- */
 function toggleMenu() {
   document.querySelector("nav").classList.toggle("active");
 }
 
-
-  // Scroll animation effect
-  const sections = document.querySelectorAll("section");
-  window.addEventListener("scroll", () => {
-    const triggerBottom = window.innerHeight / 1.1;
-    sections.forEach((sec) => {
-      const top = sec.getBoundingClientRect().top;
-      if (top < triggerBottom) sec.classList.add("show");
-    });
+/* ---------- SCROLL ANIMATION ---------- */
+const sections = document.querySelectorAll("section");
+window.addEventListener("scroll", () => {
+  const triggerBottom = window.innerHeight / 1.1;
+  sections.forEach((sec) => {
+    const top = sec.getBoundingClientRect().top;
+    if (top < triggerBottom) sec.classList.add("show");
   });
+});
 
+/* ---------- BOOK NOW BUTTON ---------- */
+document.getElementById("btnBookNow").addEventListener("click", () => {
+  document.getElementById("Booking").scrollIntoView({ behavior: "smooth" });
+});
 
-  
+/* ---------- CHECK AVAILABILITY ---------- */
+document.getElementById("checkBtn").addEventListener("click", function () {
 
+  const room = document.getElementById("roomType").value;
+  const checkIn = document.getElementById("checkIn").value;
+  const checkOut = document.getElementById("checkOut").value;
 
-  // BOOK NOW BUTTON → scroll to form
-  document.getElementById("btnBookNow").addEventListener("click", () => {
-    document.getElementById("Booking").scrollIntoView({ behavior: "smooth" });
-  });
+  if (!room || !checkIn || !checkOut) {
+    alert("Please fill all details");
+    return;
+  }
 
-// ---------- CHECK AVAILABILITY ----------
-  document.getElementById("checkBtn").addEventListener("click", function () {
+  // demo logic (always available)
+  document.getElementById("availabilityMsg").innerHTML = "✅ Room is AVAILABLE!";
+  document.getElementById("availabilityMsg").style.color = "green";
+  document.getElementById("confirmBtn").style.display = "block";
+});
 
-    const room = document.getElementById("roomType").value;
-    const checkIn = document.getElementById("checkIn").value;
-    const checkOut = document.getElementById("checkOut").value;
+/* ---------- BOOKING FORM SUBMIT ---------- */
+document.querySelector(".booking-form").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    if (!room || !checkIn || !checkOut) {
-      alert("Please fill all details");
-      return;
-    }
+  const fullName = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const members = document.getElementById("members").value;
+  const roomType = document.getElementById("roomType").value;
+  const checkInVal = document.getElementById("checkIn").value;
+  const checkOutVal = document.getElementById("checkOut").value;
 
-    // SIMPLE DEMO LOGIC: always available
-    const available = true;
+  if (!fullName || !email || !phone || !roomType || !checkInVal || !checkOutVal) {
+    alert("Please fill all booking details");
+    return;
+  }
 
-    if (available) {
-      document.getElementById("availabilityMsg").innerHTML =
-        "✅ Room is AVAILABLE!";
-      document.getElementById("availabilityMsg").style.color = "green";
+  let pricePerDay = 0;
+  if (roomType === "Double Bed Room") pricePerDay = 1;
+  if (roomType === "Three Bed Room") pricePerDay = 1200;
+  if (roomType === "Four Bed Room") pricePerDay = 1600;
 
-      // show confirm booking button
-      document.getElementById("confirmBtn").style.display = "block";
-    } else {
-      document.getElementById("availabilityMsg").innerHTML =
-        "❌ Room NOT Available!";
-      document.getElementById("availabilityMsg").style.color = "red";
-      document.getElementById("confirmBtn").style.display = "none";
-    }
-  });
+  const checkIn = new Date(checkInVal);
+  const checkOut = new Date(checkOutVal);
 
+  if (checkOut <= checkIn) {
+    alert("Check-out must be after check-in");
+    return;
+  }
 
-  // Booking form submit — calculate days, price, save and redirect to payment
-  document.querySelector(".booking-form").addEventListener("submit", function(e) {
-    e.preventDefault();
+  const totalDays = (checkOut - checkIn) / (1000 * 3600 * 24);
+  const finalAmount = totalDays * pricePerDay;
 
-    const roomType = document.getElementById("roomType").value;
-    let pricePerDay = 0;
-    if (roomType === "Double Bed Room") pricePerDay = 1;
-    if (roomType === "Three Bed Room") pricePerDay = 1200;
-    if (roomType === "Four Bed Room") pricePerDay = 1600;
+  document.getElementById("totalPrice").innerText =
+    `Total: ₹${finalAmount} (${totalDays} night(s))`;
 
-    const checkInVal = document.getElementById("checkIn").value;
-    const checkOutVal = document.getElementById("checkOut").value;
-    if (!checkInVal || !checkOutVal) return alert("Please select dates");
-
-    const checkIn = new Date(checkInVal);
-    const checkOut = new Date(checkOutVal);
-
-    if (checkOut <= checkIn) {
-      alert("Check-out must be after check-in");
-      return;
-    }
-
-    const totalDays = (checkOut - checkIn) / (1000 * 3600 * 24);
-    const finalAmount = totalDays * pricePerDay;
-
- const fullName = document.getElementById("fullName").value;
-const email = document.getElementById("email").value;
-const phone = document.getElementById("phone").value;
-const members = document.getElementById("members").value;
-
-// show quick price on page (optional)
-document.getElementById("totalPrice").innerText =
-  `Total: ₹${finalAmount} (${totalDays} night(s))`;
-
-// ✅ REDIRECT WITH PARAMS
-setTimeout(() => {
-  window.location.href =
-    "payment.html" +
-    "?name=" + encodeURIComponent(fullName) +
-    "&email=" + encodeURIComponent(email) +
-    "&phone=" + encodeURIComponent(phone) +
-    "&room=" + encodeURIComponent(roomType) +
-    "&checkIn=" + encodeURIComponent(checkInVal) +
-    "&checkOut=" + encodeURIComponent(checkOutVal) +
-    "&members=" + encodeURIComponent(members) +
-    "&days=" + encodeURIComponent(totalDays) +
-    "&amount=" + encodeURIComponent(finalAmount);
-}, 700);
-
-
-    // show quick price on page (optional)
-    document.getElementById("totalPrice").innerText = `Total: ₹${finalAmount} (${totalDays} night(s))`;
-
- 
+  /* ✅ REDIRECT TO PAYMENT WITH URL PARAMS */
+  setTimeout(() => {
+    window.location.href =
+      "payment.html" +
+      "?name=" + encodeURIComponent(fullName) +
+      "&email=" + encodeURIComponent(email) +
+      "&phone=" + encodeURIComponent(phone) +
+      "&room=" + encodeURIComponent(roomType) +
+      "&checkIn=" + encodeURIComponent(checkInVal) +
+      "&checkOut=" + encodeURIComponent(checkOutVal) +
+      "&members=" + encodeURIComponent(members) +
+      "&days=" + encodeURIComponent(totalDays) +
+      "&amount=" + encodeURIComponent(finalAmount);
+  }, 600);
+});
 </script>
 </body>
 </html>
+
 
