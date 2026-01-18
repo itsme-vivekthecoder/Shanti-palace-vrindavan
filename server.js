@@ -19,52 +19,44 @@ app.post("/create-order", async (req, res) => {
     const { amount } = req.body;
 
     const order = await razorpay.orders.create({
-      amount: amount * 100, // amount in paise
+      amount: amount * 100,   // ₹ → paise
       currency: "INR",
       receipt: "receipt_" + Date.now(),
-      payment_capture: 0 // MANUAL CAPTURE
+      payment_capture: 1      // ✅ AUTO CAPTURE
     });
 
     res.json({
-      orderId: order.id,
+      order_id: order.id,
       amount: order.amount
     });
   } catch (err) {
-    console.error("CREATE ORDER ERROR:", err);
+    console.error("ORDER ERROR:", err);
     res.status(500).json({ error: "Order creation failed" });
   }
 });
 
 /* VERIFY PAYMENT */
 app.post("/verify-payment", (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-
-  const sign = razorpay_order_id + "|" + razorpay_payment_id;
-
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-    .update(sign.toString())
-    .digest("hex");
-
-  if (expectedSignature === razorpay_signature) {
-    res.json({ success: true });
-  } else {
-    res.status(400).json({ success: false, message: "Payment verification failed" });
-  }
-});
-
-/* CAPTURE PAYMENT */
-app.post("/capture-payment", async (req, res) => {
   try {
-    const { payment_id, amount } = req.body; // amount in rupees
+    const { order_id, payment_id, signature } = req.body;
 
-    // Capture payment
-    const captureResponse = await razorpay.payments.capture(payment_id, amount * 100, "INR");
+    const body = order_id + "|" + payment_id;
 
-    res.json({ status: "success", data: captureResponse });
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(body)
+      .digest("hex");
+
+    if (expectedSignature !== signature) {
+      return res.status(400).json({ status: "signature_failed" });
+    }
+
+    // ✅ No capture needed
+    res.json({ status: "success" });
+
   } catch (err) {
-    console.error("CAPTURE ERROR:", err);
-    res.status(500).json({ status: "capture_failed", error: err.message });
+    console.error("VERIFY ERROR:", err);
+    res.status(500).json({ status: "verification_failed" });
   }
 });
 
