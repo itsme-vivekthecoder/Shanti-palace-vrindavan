@@ -140,6 +140,13 @@ const phone = localStorage.getItem("phone");
 const room = localStorage.getItem("roomType");
 const amount = parseInt(localStorage.getItem("finalAmount"));
 
+  if (!name || !phone || !room || !amount || isNaN(amount)) {
+  alert("Booking details missing. Please book again.");
+  window.location.href = "index.html#Booking";
+  return;
+}
+
+
 /* 🔹 Show details on page */
 document.getElementById("name").innerText = name || "-";
 document.getElementById("phone").innerText = phone || "-";
@@ -219,6 +226,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
