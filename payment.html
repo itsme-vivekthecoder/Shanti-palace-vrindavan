@@ -175,52 +175,43 @@ async function startPayment() {
       description: "Room Booking Payment",
       order_id: order.id,
 
-      handler: async function (response) {
-
-        /* STEP 3: Verify payment */
-        const verify = await fetch("https://shanti-palace-vrindavan.onrender.com/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            order_id: response.razorpay_order_id,
-            payment_id: response.razorpay_payment_id,
-            signature: response.razorpay_signature,
-             amount: order.amount   // 👈 SEND EXACT AMOUNT
-          })
-        });
-
-        const result = await verify.json();
-
-        if (result.status === "success") {
+      handler: function (response) {
+      // ✅ VERIFY PAYMENT
+      fetch("https://shanti-palace-vrindavan.onrender.com/verify-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: response.razorpay_order_id,
+          payment_id: response.razorpay_payment_id,
+          signature: response.razorpay_signature
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          // ✅ VERIFIED
           window.location.href =
-            "success.html" +
-            "?payment_id=" + encodeURIComponent(response.razorpay_payment_id);
+            "success.html?razorpay_payment_id=" +
+            response.razorpay_payment_id;
         } else {
           alert("Payment verification failed");
         }
-      },
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Verification error");
+      });
+    }
+  };
 
-      prefill: {
-        name: name,
-        contact: phone
-      },
-
-      theme: {
-        color: "#7a1f1f"
-      }
-    };
-
-    new Razorpay(options).open();
-
-  } catch (err) {
-    alert("Server error");
-    console.error(err);
-  }
+  var rzp = new Razorpay(options);
+  rzp.open();
 }
 </script>
 
 </body>
 </html>
+
 
 
 
