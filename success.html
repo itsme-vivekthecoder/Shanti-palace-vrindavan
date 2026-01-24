@@ -70,7 +70,7 @@ const members = localStorage.getItem('members') || '';
 const roomType = localStorage.getItem('roomType') || '';
 const totalDays = localStorage.getItem('totalDays') || '';
 const finalAmount = localStorage.getItem('finalAmount') || 0;
-
+   const paymentId = localStorage.getItem("paymentId") || "";
 
  // 1️⃣ Submit booking details to Google Form
       const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
@@ -84,7 +84,7 @@ const finalAmount = localStorage.getItem('finalAmount') || 0;
         "entry.516627955": totalDays,
         "entry.1301069124": members,
         "entry.764039404": finalAmount,
-        "entry.2021412614": response.razorpay_payment_id
+        "entry.2021412614": paymentId
       });
       fetch(googleFormURL, {
         method: "POST",
@@ -93,37 +93,8 @@ const finalAmount = localStorage.getItem('finalAmount') || 0;
         body: formData.toString()
       });
 
-function sendWhatsApp() {
-  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
-Your booking is CONFIRMED ✅
-
-Room: ${room}
-Check In Date: ${checkInDate}
-check Out Date: ${checkOutDate}
-Payment ID: ${paymentId}
-
-Shanti Palace Vrindavan`;
-
-  window.open(
-    "https://wa.me/91" + phone + "?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
-}
-
-function sendSMS() {
-  const msg = `🥰 Radhe Radhe 🙏🏻 ${name},
-Your booking is CONFIRMED ✅
-
-Room: ${room}
-Check In Date: ${checkInDate}
-check Out Date: ${checkOutDate}
-Payment ID: ${paymentId}
-
-Shanti Palace Vrindavan`;
-  window.location.href =
-    "sms:91" + phone + "?body=" + encodeURIComponent(msg);
-}
 </script>
 
 </body>
 </html>
+
