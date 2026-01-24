@@ -43,7 +43,10 @@ app.post("/create-order", async (req, res) => {
 /* VERIFY PAYMENT */
 app.post("/verify-payment", (req, res) => {
   try {
-    const { order_id, payment_id, signature } = req.body;
+    const { razorpay_order_id,
+           razorpay_payment_id, 
+           razorpay_signature 
+          }= req.body;
 
     const body = order_id + "|" + payment_id;
 
@@ -72,6 +75,7 @@ app.listen(PORT, () => {
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
+
 
 
 
