@@ -177,27 +177,33 @@ async function startPayment() {
 
       handler: async function (response) {
 
-        /* STEP 3: Verify payment */
-        const verify = await fetch("https://shanti-palace-vrindavan.onrender.com/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            order_id: response.razorpay_order_id,
-            payment_id: response.razorpay_payment_id,
-            signature: response.razorpay_signature,
-             amount: order.amount   // 👈 SEND EXACT AMOUNT
-          })
-        });
+  console.log("Razorpay response:", response);
 
-        const result = await verify.json();
+  const verify = await fetch(
+    "https://shanti-palace-vrindavan.onrender.com/verify-payment",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        order_id: response.razorpay_order_id,
+        payment_id: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+      })
+    }
+  );
 
-        if (result.status === "success") {
-          window.location.href =
-  "success.html?razorpay_payment_id=" + encodeURIComponent(response.razorpay_payment_id);
-        } else {
-          alert("Payment verification failed");
-        }
-      },
+  const result = await verify.json();
+  console.log("Verify result:", result);
+
+  if (result.status === "success") {
+    window.location.href =
+      "success.html?razorpay_payment_id=" +
+      encodeURIComponent(response.razorpay_payment_id);
+  } else {
+    alert("Payment verification failed");
+  }
+}
+,
 
       prefill: {
         name: name,
@@ -220,6 +226,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
