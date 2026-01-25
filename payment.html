@@ -165,7 +165,7 @@ async function startPayment() {
   const order = await orderRes.json();
 
   const options = {
-    key: "RAZORPAY_KEY_ID_HERE", // only KEY_ID here
+    key: "rzp_live_S7i1AoXAlHDy5O", // only KEY_ID here
     amount: order.amount,
     currency: "INR",
     order_id: order.order_id,
@@ -205,6 +205,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
