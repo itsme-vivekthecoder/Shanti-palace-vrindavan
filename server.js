@@ -38,16 +38,19 @@ app.post("/create-order", async (req, res) => {
 /* VERIFY PAYMENT */
 app.post("/verify-payment", (req, res) => {
   try {
-    const { order_id, payment_id, signature } = req.body;
+    const { 
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature } = req.body;
 
-    const body = order_id + "|" + payment_id;
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body)
       .digest("hex");
 
-    if (expectedSignature !== signature) {
+    if (expectedSignature !== razorpay_signature) {
       return res.status(400).json({ status: "signature_failed" });
     }
 
@@ -64,4 +67,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
