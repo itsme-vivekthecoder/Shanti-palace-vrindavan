@@ -196,28 +196,14 @@ async function startPayment(amount) {
         alert("Payment verification failed");
       }
     }
-  },
-      prefill: {
-        name: name,
-        contact: phone
-      },
-
-      theme: {
-        color: "#7a1f1f"
-      }
-    };
-
-    new Razorpay(options).open();
-
-  } catch (err) {
-    alert("Server error");
-    console.error(err);
-  }
+  };
+   new Razorpay(options).open();
 }
 </script>
 
 </body>
 </html>
+
 
 
 
