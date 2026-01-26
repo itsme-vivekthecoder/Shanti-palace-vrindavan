@@ -5,12 +5,7 @@ const crypto = require("crypto");
 const cors = require("cors");
 
 const app = express();
-app.use(cors({
-  origin: "https://shanti-palace-vrindavan.netlify.app",
-  methods: ["GET", "POST"],
-  credentials: true
-}));
-;
+app.use(cors());
 app.use(express.json());
 
 const razorpay = new Razorpay({
@@ -43,10 +38,7 @@ app.post("/create-order", async (req, res) => {
 /* VERIFY PAYMENT */
 app.post("/verify-payment", (req, res) => {
   try {
-    const { razorpay_order_id,
-           razorpay_payment_id, 
-           razorpay_signature 
-          }= req.body;
+    const { order_id, payment_id, signature } = req.body;
 
     const body = order_id + "|" + payment_id;
 
@@ -72,10 +64,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
-app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
-
-
-
 
