@@ -22,7 +22,6 @@ app.post("/create-order", async (req, res) => {
       amount: amount * 100,   // ₹ → paise
       currency: "INR",
       receipt: "receipt_" + Date.now(),
-      payment_capture: 1      // ✅ AUTO CAPTURE
     });
 
     res.json({
@@ -67,5 +66,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
 
