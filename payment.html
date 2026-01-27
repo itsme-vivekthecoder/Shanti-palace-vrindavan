@@ -183,6 +183,10 @@ async function startPayment() {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+            customer_email: params.get("email"), // Index page se aaya email
+      customer_name: params.get("name"),   // Index page se aaya naam
+      room: params.get("room"),
+      amount: params.get("amount")
           })
         });
 
@@ -217,6 +221,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
