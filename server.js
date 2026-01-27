@@ -49,7 +49,29 @@ app.post("/verify-payment", (req, res) => {
       .update(body)
       .digest("hex");
 
-    if (expectedSignature !== razorpay_signature) {
+  /* server.js mein verify-payment ke andar */
+if (expectedSignature === razorpay_signature) {
+  const mailOptions = {
+    from: '"Shanti Palace Vrindavan" <' + process.env.EMAIL_USER + '>',
+    to: customer_email,
+    subject: "Booking Confirmed - Shanti Palace Vrindavan",
+    html: `
+      <div style="font-family: Arial; border: 1px solid #7a1f1f; padding: 20px; border-radius: 10px;">
+        <h2 style="color: #7a1f1f;">Booking Confirmed! ✅</h2>
+        <p>Radhe Radhe <b>${customer_name}</b>,</p>
+        <p>Aapka stay Shanti Palace Vrindavan mein confirm ho gaya hai.</p>
+        <hr>
+        <p><b>Room Type:</b> ${room}</p>
+        <p><b>Amount Paid:</b> ₹${amount}</p>
+        <p><b>Payment ID:</b> ${razorpay_payment_id}</p>
+        <hr>
+        <p>Hum Vrindavan mein aapka swagat karne ke liye taiyar hain!</p>
+        <p style="font-size: 12px; color: #666;">📍 Vidhyapeeth Chauraha, Vrindavan</p>
+      </div>`
+  };
+  await transporter.sendMail(mailOptions);
+  res.json({ status: "success" });
+} else {
       return res.status(400).json({ status: "signature_failed" });
     }
 
@@ -66,6 +88,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
 
 
