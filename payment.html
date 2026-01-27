@@ -171,7 +171,7 @@ async function startPayment() {
       currency: "INR",
       name: "Shanti Palace Vrindavan",
       description: "Room Booking Payment",
-      order_id: order.id,
+      order_id: order.order_id,
 
       handler: async function (response) {
 
@@ -190,7 +190,7 @@ async function startPayment() {
 
         if (result.status === "success") {
           window.location.href =
-  "success.html?razorpay_payment_id=" + encodeURIComponent(response.razorpay_payment_id);
+  "success.html?razorpay_payment_id=" + response.razorpay_payment_id;
         } else {
           alert("Payment verification failed");
         }
@@ -217,6 +217,7 @@ async function startPayment() {
 
 </body>
 </html>
+
 
 
 
