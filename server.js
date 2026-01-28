@@ -35,7 +35,7 @@ app.post("/create-order", async (req, res) => {
 });
 
 /* VERIFY PAYMENT */
-app.post("/verify-payment", (req, res) => {
+app.post("/verify-payment",async (req, res) => {
   try {
     const { 
       razorpay_order_id,
@@ -88,6 +88,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
 
 
 
