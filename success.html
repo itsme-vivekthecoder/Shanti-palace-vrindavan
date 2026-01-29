@@ -46,10 +46,10 @@
 
 <div class="box">
   <h2>Payment Successful 🎉</h2>
-  <p>Your booking is confirmed.</p>
-
-  <button class="btn" onclick="sendWhatsApp()">Send Confirmation via WhatsApp</button>
-  <button class="btn" style="background:#1976d2;" onclick="sendSMS()">Send Confirmation via SMS</button>
+    <p>Jai Shri Krishna! Aapki booking confirm ho gayi hai.</p>
+  <p>Booking ki details aapki email ID par bhej di gayi hain.</p>
+  
+  <button class="btn" style="margin-top: 25px;" onclick="window.location.href='index.html'">Go to Home</button>
 </div>
 
 <script>
@@ -76,8 +76,8 @@ const finalAmount = localStorage.getItem('finalAmount') || 0;
       const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
       const formData = new URLSearchParams({
         "entry.1181525787": name,
-        "entry.26796576": email,
-        "entry.1505113845": phone,
+        "entry.1505113845": email,
+        "entry.26796576": phone,
         "entry.133939998": roomType,
         "entry.8435932": checkIn,
         "entry.1082238197": checkOut,
@@ -97,4 +97,5 @@ const finalAmount = localStorage.getItem('finalAmount') || 0;
 
 </body>
 </html>
+
 
