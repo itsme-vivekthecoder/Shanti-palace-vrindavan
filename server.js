@@ -3,6 +3,16 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const cors = require("cors");
+const nodemailer = require("nodemailer"); // Agar ye pehle se hai toh dobara mat likhna
+
+// Is block ko 'app.post' se PEHLE daalna hai
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER, // Render environment variable
+    pass: process.env.EMAIL_PASS, // Render environment variable (16-digit App Password)
+  },
+});
 
 const app = express();
 app.use(cors());
@@ -51,7 +61,7 @@ app.post("/verify-payment",async (req, res) => {
 
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(body)
+      .update(body.toString())
       .digest("hex");
 
   /* server.js mein verify-payment ke andar */
