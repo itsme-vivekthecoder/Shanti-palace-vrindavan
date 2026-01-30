@@ -40,7 +40,12 @@ app.post("/verify-payment",async (req, res) => {
     const { 
       razorpay_order_id,
       razorpay_payment_id,
-      razorpay_signature } = req.body;
+      razorpay_signature,
+      customer_email,
+      customer_name,
+      room,
+      amount
+    } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
