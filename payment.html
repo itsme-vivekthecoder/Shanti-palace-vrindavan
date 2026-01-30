@@ -136,6 +136,7 @@ button:active {
 const params = new URLSearchParams(window.location.search);
 
 const name = params.get("name");
+const customer_email = params.get("email");
 const phone = params.get("phone");
 const room = params.get("room");
 const amount = parseInt(params.get("amount"));
@@ -148,6 +149,7 @@ if (!name || !phone || !room || !amount || isNaN(amount)) {
 
 /* Show details */
 document.getElementById("name").innerText = name;
+document.getElementById("email").innerText = customer_email;
 document.getElementById("phone").innerText = phone;
 document.getElementById("room").innerText = room;
 document.getElementById("amount").innerText = amount;
