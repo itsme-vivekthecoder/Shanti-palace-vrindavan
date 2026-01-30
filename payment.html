@@ -110,6 +110,11 @@ button:active {
   </div>
 
   <div class="detail">
+    <span class="label">Email</span>
+    <span class="value" id="email">-</span>
+  </div>
+
+  <div class="detail">
     <span class="label">Phone</span>
     <span class="value" id="phone">-</span>
   </div>
@@ -141,7 +146,7 @@ const phone = params.get("phone");
 const room = params.get("room");
 const amount = parseInt(params.get("amount"));
 
-if (!name || !phone || !room || !amount || isNaN(amount)) {
+if (!name || !customer_email || !phone || !room || !amount || isNaN(amount)) {
   alert("Booking details missing. Please book again.");
   window.location.href = "index.html#Booking";
   throw new Error("Missing booking details");
