@@ -7,7 +7,9 @@ const nodemailer = require("nodemailer"); // Agar ye pehle se hai toh dobara mat
 
 // Is block ko 'app.post' se PEHLE daalna hai
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER, // Render environment variable
     pass: process.env.EMAIL_PASS, // Render environment variable (16-digit App Password)
