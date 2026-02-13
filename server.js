@@ -17,7 +17,11 @@ const transporter = nodemailer.createTransport({
 });
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "*", // Ye har jagah se request allow kar dega
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"]
+}));
 app.use(express.json());
 
 const razorpay = new Razorpay({
