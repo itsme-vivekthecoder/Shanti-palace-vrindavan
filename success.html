@@ -102,49 +102,6 @@
   </div>
 </footer>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const razorpayIdFromURL = params.get("razorpay_payment_id");
-
-if (razorpayIdFromURL) {
-  localStorage.setItem("paymentId", razorpayIdFromURL);
-}
-
-
-const name = localStorage.getItem('fullName') || '';
-const email = localStorage.getItem('email') || '';
-const phone = localStorage.getItem('phone') || '';
-const checkIn = localStorage.getItem('checkIn') || '';
-const checkOut = localStorage.getItem('checkOut') || '';
-const members = localStorage.getItem('members') || '';
-const roomType = localStorage.getItem('roomType') || '';
-const totalDays = localStorage.getItem('totalDays') || '';
-const finalAmount = localStorage.getItem('finalAmount') || 0;
-   const paymentId = localStorage.getItem("paymentId") || "";
-
- // 1️⃣ Submit booking details to Google Form
-      const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
-      const formData = new URLSearchParams({
-        "entry.1181525787": name,
-        "entry.1505113845": email,
-        "entry.26796576": phone,
-        "entry.133939998": roomType,
-        "entry.8435932": checkIn,
-        "entry.1082238197": checkOut,
-        "entry.516627955": totalDays,
-        "entry.1301069124": members,
-        "entry.764039404": finalAmount,
-        "entry.2021412614": paymentId
-      });
-      fetch(googleFormURL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: formData.toString()
-      });
-
-</script>
-
 </body>
 </html>
 
