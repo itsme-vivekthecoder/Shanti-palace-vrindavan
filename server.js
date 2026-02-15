@@ -3,7 +3,6 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const cors = require("cors");
-const fetch = require("node-fetch"); // Agar node version purana hai toh
 
 const app = express();
 app.use(cors({ origin: "*" }));
