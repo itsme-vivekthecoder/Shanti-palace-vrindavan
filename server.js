@@ -13,24 +13,30 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// --- GOOGLE FORM SAVING FUNCTION ---
 const saveToGoogleForm = async (data) => {
   const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
-  
-  const params = new URLSearchParams({
-    "entry.1181525787": data.name,
-    "entry.1505113845": data.email,   // Guest Email (Sabse Important)
-    "entry.26796576": data.phone,
-    "entry.133939998": data.room,
-    "entry.764039404": data.amount,
-    "entry.2021412614": data.paymentId,
-    "entry.8435932": data.checkIn || "",
-    "entry.1082238197": data.checkOut || ""
-  });
+
+  // URLSearchParams ensures data is sent as 'application/x-www-form-urlencoded'
+  const params = new URLSearchParams();
+  params.append("entry.1181525787", data.name);
+  params.append("entry.26796576", data.email);
+  params.append("entry.1505113845", data.phone);
+  params.append("entry.133939998", data.room);
+  params.append("entry.764039404", data.amount);
+  params.append("entry.2021412614", data.paymentId);
 
   try {
-    await fetch(formURL, { method: "POST", body: params });
-    console.log("✅ Data saved to Google Sheet");
+    const response = await fetch(formURL, {
+      method: "POST",
+      mode: "no-cors", // Google Forms ke liye zaroori hai
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    });
+
+    // Note: 'no-cors' mode mein status hamesha 0 dikhayega, jo ki normal hai
+    console.log("✅ Google Form submission attempt complete");
   } catch (err) {
     console.error("❌ Google Sheet Error:", err);
   }
