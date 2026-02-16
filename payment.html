@@ -144,6 +144,9 @@ const name = params.get("name");
 const email = params.get("email");
 const phone = params.get("phone");
 const room = params.get("room");
+const checkin = params.get("checkin");
+const checkout = params.get("checkout"); 
+const members = params.get("members");
 const amount = parseInt(params.get("amount"));
 
 if (!name || !email || !phone || !room || !amount || isNaN(amount)) {
@@ -191,7 +194,7 @@ async function startPayment() {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
-           guestData: { name, email, phone, room, amount } // Data server ko bheja
+           guestData: { name, email, phone, room, amount,checkin,checkout,members, } // Data server ko bheja
           })
         });
 

@@ -14,17 +14,8 @@ const razorpay = new Razorpay({
 });
 
 const saveToGoogleForm = async (data) => {
-  const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSciTMHoPTqDOYNXGWZ-U01QO0cihDlAUwiwuu2HjZbXwTLucw/formResponse";
-
-  // URLSearchParams ensures data is sent as 'application/x-www-form-urlencoded'
-  const params = new URLSearchParams();
-  params.append("entry.1181525787", data.name);
-  params.append("entry.26796576", data.email);
-  params.append("entry.1505113845", data.phone);
-  params.append("entry.133939998", data.room);
-  params.append("entry.764039404", data.amount);
-  params.append("entry.2021412614", data.paymentId);
-
+ const scriptURL = "https://script.google.com/macros/s/AKfycbx2MSDinEO9HO5CDkHPHnUZ34andXk_bYtew_R6Z9N0Wqr2pINMi6vDopekXueA3oe52A/exec"; // Apne Google Apps Script ka URL yahan daalein
+  
   try {
     const response = await fetch(formURL, {
       method: "POST",
