@@ -14,22 +14,23 @@ const razorpay = new Razorpay({
 });
 
 const saveToGoogleForm = async (data) => {
- const scriptURL = "https://script.google.com/macros/s/AKfycbx2MSDinEO9HO5CDkHPHnUZ34andXk_bYtew_R6Z9N0Wqr2pINMi6vDopekXueA3oe52A/exec"; // Apne Google Apps Script ka URL yahan daalein
+ const scriptURL = "https://script.google.com/macros/s/AKfycbz2bXSEu-XYrExgPuLr5NxKjJVCA4l0O3YzlRZ4gb6KUuj52oqeMUhGFRGRC8Aa9dNaGQ/exec"; // Apne Google Apps Script ka URL yahan daalein
   
   try {
     const response = await fetch(formURL, {
       method: "POST",
-      mode: "no-cors", // Google Forms ke liye zaroori hai
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+      mode: "no-cors", 
+      redirect: "follow", // Google Forms ke liye zaroori hai
+    headers: {
+        "Content-Type": "text/plain;charset=utf-8", 
       },
-      body: params.toString(),
+   body: JSON.stringify(data),
     });
 
-    // Note: 'no-cors' mode mein status hamesha 0 dikhayega, jo ki normal hai
-    console.log("✅ Google Form submission attempt complete");
+    const result = await response.text();
+    console.log("📥 Google ki taraf se response:", result);
   } catch (err) {
-    console.error("❌ Google Sheet Error:", err);
+    console.error("❌ Render Backend mein error:", err);
   }
 };
 
