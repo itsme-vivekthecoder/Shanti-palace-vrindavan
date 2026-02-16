@@ -144,12 +144,12 @@ const name = params.get("name");
 const email = params.get("email");
 const phone = params.get("phone");
 const room = params.get("room");
-const checkin = params.get("checkin");
-const checkout = params.get("checkout"); 
+const checkin = params.get("checkIn");
+const checkout = params.get("checkOut"); 
 const members = params.get("members");
 const amount = parseInt(params.get("amount"));
 
-if (!name || !email || !phone || !room || !amount || isNaN(amount)) {
+if (!name || !email || !phone || !room || !amount || !checkin || !checkout || isNaN(amount)) {
   alert("Booking details missing. Please book again.");
   window.location.href = "index.html#Booking";
   throw new Error("Missing booking details");
