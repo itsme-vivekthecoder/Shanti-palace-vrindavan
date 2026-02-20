@@ -14,7 +14,7 @@ const razorpay = new Razorpay({
 });
 
 const saveToGoogleForm = async (data) => {
- const scriptURL = "https://script.google.com/macros/s/AKfycbw9A0Va6aBU-A0kDeelldcBPTcaIx2YtGAdzDnjJNeMPGskmrxWuBSYblybX-r2gXu7bA/exec"; // Apne Google Apps Script ka URL yahan daalein
+ const scriptURL = "https://script.google.com/macros/s/AKfycbyE49wh56x3-GWfUhmegRghkYN5MOB09RmWDDYDXLtzkO0NBMAmXwKNicizHVi0EtQKyQ/exec"; // Apne Google Apps Script ka URL yahan daalein
   
   try {
     const response = await fetch(scriptURL, {

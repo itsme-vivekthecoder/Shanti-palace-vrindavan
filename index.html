@@ -174,9 +174,9 @@
     <div class="input-group">
       <select id="roomType" required>
         <option value="" disabled selected>Select Room Type</option>
-        <option value="Double Bed Room">Double Bed Room – ₹1/day</option>
-        <option value="Three Bed Room">Three Bed Room – ₹1200/day</option>
-        <option value="Four Bed Room">Four Bed Room – ₹1600/day</option>
+        <option value="Double Bed Room">Double Bed Room – ₹1400/day</option>
+        <option value="Three Bed Room">Three Bed Room – ₹1600/day</option>
+        <option value="Four Bed Room">Four Bed Room – ₹2000/day</option>
       </select>
       <label class="fixed">Room Type</label>
     </div>
@@ -393,9 +393,9 @@ document.querySelector(".booking-form").addEventListener("submit", function (e) 
   }
 
   let pricePerDay = 0;
-  if (roomType === "Double Bed Room") pricePerDay = 1;
-  if (roomType === "Three Bed Room") pricePerDay = 1200;
-  if (roomType === "Four Bed Room") pricePerDay = 1600;
+  if (roomType === "Double Bed Room") pricePerDay = 1400;
+  if (roomType === "Three Bed Room") pricePerDay = 1600;
+  if (roomType === "Four Bed Room") pricePerDay = 2000;
 
   const checkIn = new Date(checkInVal);
   const checkOut = new Date(checkOutVal);
