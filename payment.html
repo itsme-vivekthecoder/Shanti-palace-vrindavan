@@ -144,12 +144,12 @@ const name = params.get("name");
 const email = params.get("email");
 const phone = params.get("phone");
 const room = params.get("room");
-const checkin = params.get("checkIn");
-const checkout = params.get("checkOut"); 
+const checkIn = params.get("checkIn");
+const checkOut = params.get("checkOut"); 
 const members = params.get("members");
 const amount = parseInt(params.get("amount"));
 
-if (!name || !email || !phone || !room || !amount || !checkin || !checkout || isNaN(amount)) {
+if (!name || !email || !phone || !room || !amount || !checkIn || !checkOut || isNaN(amount)) {
   alert("Booking details missing. Please book again.");
   window.location.href = "index.html#Booking";
   throw new Error("Missing booking details");
@@ -194,7 +194,7 @@ async function startPayment() {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
-           guestData: { name, email, phone, room, amount,checkin,checkout,members, } // Data server ko bheja
+           guestData: { name, email, phone, room, amount, checkIn, checkOut, members, } // Data server ko bheja
           })
         });
 
