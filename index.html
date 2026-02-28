@@ -336,6 +336,7 @@
     <p>© 2026 Shanti Palace Vrindavan. All Rights Reserved.</p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
 /* ---------- MOBILE MENU ---------- */
 function toggleMenu() {
@@ -426,7 +427,51 @@ document.querySelector(".booking-form").addEventListener("submit", function (e) 
       "&amount=" + encodeURIComponent(finalAmount);
   }, 600);
 });
+
+// --- Holi Animation Logic ---
+function vrinadavanHoliBlast() {
+  const duration = 3000; // 3 seconds
+  const animationEnd = Date.now() + duration;
+  const holiColors = ['#FF1493', '#FFD700', '#FF8C00', '#32CD32', '#00CED1'];
+
+  (function frame() {
+    const timeLeft = animationEnd - Date.now();
+    if (timeLeft <= 0) return;
+
+    const particleCount = 2; // Kitne particles ek baar mein
+
+    confetti({
+      particleCount,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0, y: 0.7 }, // Left side se udega
+      colors: holiColors,
+      ticks: 200,
+      gravity: 1.2,
+      shapes: ['circle']
+    });
+    confetti({
+      particleCount,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1, y: 0.7 }, // Right side se udega
+      colors: holiColors,
+      ticks: 200,
+      gravity: 1.2,
+      shapes: ['circle']
+    });
+
+    requestAnimationFrame(frame);
+  }());
+}
+
+// Jab page load ho tab "Gulal" udega
+window.onload = function() {
+  setTimeout(vrinadavanHoliBlast, 500); // Adhe second baad start hoga
+};
+
 </script>
+
 </body>
 </html>
 
