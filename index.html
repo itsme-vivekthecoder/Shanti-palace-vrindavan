@@ -35,7 +35,7 @@
     }
   }
   </script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -336,7 +336,6 @@
     <p>© 2026 Shanti Palace Vrindavan. All Rights Reserved.</p>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
 /* ---------- MOBILE MENU ---------- */
 function toggleMenu() {
@@ -427,47 +426,71 @@ document.querySelector(".booking-form").addEventListener("submit", function (e) 
       "&amount=" + encodeURIComponent(finalAmount);
   }, 600);
 });
+function vrindavanNaturalGulal() {
+  const end = Date.now() + 5 * 1000; // 5 Seconds tak udega Gulal
 
-// --- Holi Animation Logic ---
-function vrinadavanHoliBlast() {
-  const duration = 3000; // 3 seconds
-  const animationEnd = Date.now() + duration;
-  const holiColors = ['#FF1493', '#FFD700', '#FF8C00', '#32CD32', '#00CED1'];
+  // Asli Vrindavan ke Gulal Colors
+  const gulalColors = [
+    '#ff4d94', // Gulaabi (Pink)
+    '#ffcc00', // Peela (Yellow)
+    '#ff6600', // Kesariya (Orange)
+    '#33cc33', // Hara (Green)
+    '#9933ff'  // Baingani (Purple)
+  ];
 
   (function frame() {
-    const timeLeft = animationEnd - Date.now();
-    if (timeLeft <= 0) return;
-
-    const particleCount = 2; // Kitne particles ek baar mein
-
+    // Left side se halki bouchar
     confetti({
-      particleCount,
+      particleCount: 2,
       angle: 60,
-      spread: 55,
-      origin: { x: 0, y: 0.7 }, // Left side se udega
-      colors: holiColors,
-      ticks: 200,
-      gravity: 1.2,
-      shapes: ['circle']
+      spread: 70,
+      origin: { x: 0, y: 0.6 },
+      colors: gulalColors,
+      scalar: 3.5,      // Size bada kiya (Gulal ka dhabba)
+      gravity: 0.4,     // Bahut slow girega (Natural feel)
+      drift: 1,         // Hawa se thoda udega
+      ticks: 400,       // Screen par der tak rukega
+      shapes: ['circle'] // Gole gulal ki tarah
     });
+
+    // Right side se halki bouchar
     confetti({
-      particleCount,
+      particleCount: 2,
       angle: 120,
-      spread: 55,
-      origin: { x: 1, y: 0.7 }, // Right side se udega
-      colors: holiColors,
-      ticks: 200,
-      gravity: 1.2,
+      spread: 70,
+      origin: { x: 1, y: 0.6 },
+      colors: gulalColors,
+      scalar: 3.5,
+      gravity: 0.4,
+      drift: -1,
+      ticks: 400,
       shapes: ['circle']
     });
 
-    requestAnimationFrame(frame);
+    // Randomly poori screen par "Gulal ki Mutthi" phenkna
+    if (Math.random() > 0.85) {
+      confetti({
+        particleCount: 10,
+        startVelocity: 15,
+        spread: 360,
+        origin: { x: Math.random(), y: Math.random() - 0.2 },
+        colors: gulalColors,
+        scalar: 2.5,
+        gravity: 0.3,
+        ticks: 300,
+        shapes: ['circle']
+      });
+    }
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
   }());
 }
 
-// Jab page load ho tab "Gulal" udega
+// Page load hone ke 1 sec baad shuru hoga
 window.onload = function() {
-  setTimeout(vrinadavanHoliBlast, 500); // Adhe second baad start hoga
+  setTimeout(vrindavanNaturalGulal, 1000);
 };
 
 </script>

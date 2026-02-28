@@ -582,3 +582,7 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
+  canvas {
+    filter: blur(1.5px); /* Isse gulal ekdum natural aur powdery lagega */
+    pointer-events: none;
+  }
