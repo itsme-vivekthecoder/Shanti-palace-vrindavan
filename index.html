@@ -35,11 +35,11 @@
     }
   }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+<div id="gulal-container"></div>
 <header>
   <h1>SHANTI PALACE</h1>
   <div class="menu-btn" onclick="toggleMenu()">☰</div>
@@ -426,75 +426,31 @@ document.querySelector(".booking-form").addEventListener("submit", function (e) 
       "&amount=" + encodeURIComponent(finalAmount);
   }, 600);
 });
-function vrindavanNaturalGulal() {
-  const end = Date.now() + 5 * 1000; // 5 Seconds tak udega Gulal
+`function udtaGulal() {
+const container = document.getElementById('gulal-container');
+const colors = ['#FF1493', '#FFD700', '#FF4500', '#32CD32', '#8A2BE2'];
 
-  // Asli Vrindavan ke Gulal Colors
-  const gulalColors = [
-    '#ff4d94', // Gulaabi (Pink)
-    '#ffcc00', // Peela (Yellow)
-    '#ff6600', // Kesariya (Orange)
-    '#33cc33', // Hara (Green)
-    '#9933ff'  // Baingani (Purple)
-  ];
+function createPowder() {
+const cloud = document.createElement('div');
+cloud.className = 'gulal-cloud';
+const size = Math.random() * 100 + 60 + 'px';
+cloud.style.width = size;
+cloud.style.height = size;
+cloud.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+cloud.style.left = Math.random() * 100 + 'vw';
+cloud.style.top = Math.random() * 100 + 'vh';
 
-  (function frame() {
-    // Left side se halki bouchar
-    confetti({
-      particleCount: 2,
-      angle: 60,
-      spread: 70,
-      origin: { x: 0, y: 0.6 },
-      colors: gulalColors,
-      scalar: 3.5,      // Size bada kiya (Gulal ka dhabba)
-      gravity: 0.4,     // Bahut slow girega (Natural feel)
-      drift: 1,         // Hawa se thoda udega
-      ticks: 400,       // Screen par der tak rukega
-      shapes: ['circle'] // Gole gulal ki tarah
-    });
-
-    // Right side se halki bouchar
-    confetti({
-      particleCount: 2,
-      angle: 120,
-      spread: 70,
-      origin: { x: 1, y: 0.6 },
-      colors: gulalColors,
-      scalar: 3.5,
-      gravity: 0.4,
-      drift: -1,
-      ticks: 400,
-      shapes: ['circle']
-    });
-
-    // Randomly poori screen par "Gulal ki Mutthi" phenkna
-    if (Math.random() > 0.85) {
-      confetti({
-        particleCount: 10,
-        startVelocity: 15,
-        spread: 360,
-        origin: { x: Math.random(), y: Math.random() - 0.2 },
-        colors: gulalColors,
-        scalar: 2.5,
-        gravity: 0.3,
-        ticks: 300,
-        shapes: ['circle']
-      });
-    }
-
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
-  }());
 }
 
-// Page load hone ke 1 sec baad shuru hoga
-window.onload = function() {
-  setTimeout(vrindavanNaturalGulal, 1000);
-};
+for(let i = 0; i < 50; i++) {
+setTimeout(createPowder, i * 100);
+}
+}
 
+window.addEventListener('load', () => {
+setTimeout(udtaGulal, 1000);
+});`
 </script>
-
 </body>
 </html>
 

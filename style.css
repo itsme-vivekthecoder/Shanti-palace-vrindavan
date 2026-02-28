@@ -582,7 +582,13 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
-  canvas {
-    filter: blur(1.5px); /* Isse gulal ekdum natural aur powdery lagega */
-    pointer-events: none;
-  }
+#gulal-container { position: fixed; top: 0; left: 0;
+   width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 9999; 
+    overflow: hidden; } 
+    .gulal-cloud { position: absolute;
+       border-radius: 50%; filter: blur(30px);
+        opacity: 0; animation: fly-and-fade 5s ease-out forwards; } 
+        @keyframes fly-and-fade
+         { 0% { transform: scale(0.5) translate(0, 0); opacity: 0.8; } 100%
+          { transform: scale(4) translate(var(--x), var(--y)); opacity: 0; } }
