@@ -54,6 +54,7 @@ nav a:hover {
 
 
 .hero {
+  position: relative;
   height: 100vh;
   background: url('10.jpg') center/cover no-repeat fixed;
   display: flex;
@@ -61,23 +62,37 @@ nav a:hover {
   align-items: center;
   text-align: center;
   flex-direction: column;
-  animation: fadeIn 2s ease-in-out;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* DARK OVERLAY */
+}
+
+.hero h2,
+.hero p,
+.hero .btn {
+  position: relative;
+  z-index: 2;
 }
 
 .hero h2 {
-  font-size: 2.5rem;
-   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  margin-bottom: 10px;
-  color: #c27802;
-  animation: glow 2s ease-in-out infinite alternate;
+  font-size: 2.8rem;
+  font-family: Georgia, serif;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.8);
 }
 
 .hero p {
-  font-size: 1.2rem;
-  font-family: 'Georgia', serif;
-  font-style: italic;
-  color: rgb(100%, 20%, 5%);
-  max-width: 600px;
+  font-size: 1.3rem;
+  font-family: Georgia, serif;
+  color: #f1f1f1;
+  max-width: 750px;
+  line-height: 1.6;
+  text-shadow: 0 3px 15px rgba(0,0,0,0.7);
 }
 
 .btn {
@@ -582,13 +597,45 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
-#gulal-container { position: fixed; top: 0; left: 0;
-   width: 100vw; height: 100vh;
-    pointer-events: none; z-index: 9999; 
-    overflow: hidden; } 
-    .gulal-cloud { position: absolute;
-       border-radius: 50%; filter: blur(30px);
-        opacity: 0; animation: fly-and-fade 5s ease-out forwards; } 
-        @keyframes fly-and-fade
-         { 0% { transform: scale(0.5) translate(0, 0); opacity: 0.8; } 100%
-          { transform: scale(4) translate(var(--x), var(--y)); opacity: 0; } }
+#gulal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.gulal {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  filter: blur(25px);
+  opacity: 0.8;
+  animation: gulalMove 4s ease-out forwards;
+}
+
+@keyframes gulalMove {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-600px) scale(3);
+    opacity: 0;
+  }
+}
+
+
+.whatsapp-float:hover {
+  background: #1ebe5d;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37,211,102, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(37,211,102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102, 0); }
+}
