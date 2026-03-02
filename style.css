@@ -595,40 +595,7 @@ footer {
 
 .contact-box:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-#gulal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 9999;
-}
-
-.gulal {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  filter: blur(25px);
-  opacity: 0.8;
-  animation: gulalMove 4s ease-out forwards;
-}
-
-@keyframes gulalMove {
-  0% {
-    transform: translateY(0) scale(0.5);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(-600px) scale(3);
-    opacity: 0;
-  }
-}
-
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);}
 
 .whatsapp-float {
   position: fixed;

@@ -65,9 +65,9 @@ banke bihari mandir stay
 </script>
 
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://api.hotelshantipalace.in/">
+  <meta property="og:url" content="https://hotelshantipalace.in/">
   <meta property="og:title" content="Shanti Palace Vrindavan | Peaceful Stay">
-  <meta property="og:image" content="https://api.hotelshantipalace.in/1.jpg">
+  <meta property="og:image" content="https://hotelshantipalace.in/1.jpg">
   <meta property="og:description" content="Affordable rooms near Banke Bihari Mandir. Book your stay now.">
 
   <script type="application/ld+json">
@@ -105,7 +105,6 @@ banke bihari mandir stay
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div id="gulal-container"></div>
 <header>
   <h1>SHANTI PALACE</h1>
   <div class="menu-btn" onclick="toggleMenu()">☰</div>
@@ -513,31 +512,6 @@ document.querySelector(".booking-form").addEventListener("submit", function (e) 
       "&days=" + encodeURIComponent(totalDays) +
       "&amount=" + encodeURIComponent(finalAmount);
   }, 600);
-});
-window.addEventListener("load", function () {
-
-  const container = document.getElementById("gulal-container");
-
-  const colors = ["#ff1493", "#ffd700", "#ff4500", "#32cd32", "#8a2be2"];
-
-  for (let i = 0; i < 35; i++) {
-
-    const gulal = document.createElement("div");
-    gulal.classList.add("gulal");
-
-    gulal.style.background = colors[Math.floor(Math.random() * colors.length)];
-    gulal.style.left = Math.random() * window.innerWidth + "px";
-    gulal.style.bottom = "0px";
-
-    gulal.style.animationDuration = (Math.random() * 2 + 3) + "s";
-
-    container.appendChild(gulal);
-
-    setTimeout(() => {
-      gulal.remove();
-    }, 5000);
-  }
-
 });
 </script>
 <!-- WhatsApp Sticky Button -->
