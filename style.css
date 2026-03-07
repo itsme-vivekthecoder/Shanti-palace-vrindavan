@@ -621,3 +621,52 @@ footer {
   70% { box-shadow: 0 0 0 15px rgba(37,211,102, 0); }
   100% { box-shadow: 0 0 0 0 rgba(37,211,102, 0); }
 }
+.braj-cab{
+background:linear-gradient(135deg,#ff9933,#ffcc70);
+padding:70px 20px;
+text-align:center;
+color:white;
+}
+
+.braj-cab h2{
+font-size:36px;
+margin-bottom:15px;
+}
+
+.braj-cab p{
+max-width:700px;
+margin:auto;
+font-size:18px;
+margin-bottom:25px;
+}
+
+.cab-features{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:30px;
+}
+
+.cab-features span{
+background:white;
+color:#333;
+padding:10px 18px;
+border-radius:25px;
+font-size:14px;
+}
+
+.cab-btn{
+background:#8b0000;
+color:white;
+padding:14px 28px;
+text-decoration:none;
+border-radius:30px;
+font-size:18px;
+transition:0.3s;
+}
+
+.cab-btn:hover{
+background:#600000;
+transform:scale(1.05);
+}
